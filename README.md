@@ -11,7 +11,7 @@
 <summary>Как поднять:</summary>
 
 - Скачиваем репозиторий и поместить в домашнюю папку пользователя
-- `docker-compose up -d --build`
+- `docker-compose up -d --build` находясь в директории проекта
 - При необходимости `composer update` и `npm install`
 - Делаем миграции `php artisan migrate`
 - Сидим базу `php artisan storage:link`
