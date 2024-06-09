@@ -6,7 +6,7 @@
 
 В онлайн версии создано 2 аккаунта `admin@admin.com` и `admin@admin1.com` пароль одинаковый `123123123`. Пользователь 1 (admin) имеет доступ к списку с id 2 пользователя 2 (user). 
 
-Стек: Laravel 10, PHP 8.1 fpm, Postgresql 16.2, NodeJs, JQuery, Nginx, Docker
+Стек: Laravel 10, PHP 8.2 fpm, Postgresql 16.2, NodeJs, JQuery, Nginx, Docker
 
 <details>
 
