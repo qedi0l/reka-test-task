@@ -14,10 +14,10 @@
 - `docker-compose up -d --build` находясь в директории проекта
 - При необходимости `composer update` и `npm install`
 - Делаем миграции `php artisan migrate`
-- Сидим базу `php artisan storage:link`
+- Даем доступ к хранилищу `php artisan storage:link`
 
 
-Стандартный url `http://127.0.0.1:8000`
+Стандартный url `http://127.0.0.1`
 </details>
 
 ## Задание
