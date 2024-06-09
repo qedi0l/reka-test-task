@@ -10,7 +10,7 @@
                     @endphp
         
                     @foreach($hasAccess as $accessUser)
-                        @if($accessUser)
+                        @if(isset($accessUser))
                             <button onclick="removeSharedID({{$accessUser}})" href="#" class="pr-6">
                                 <span class="badge text-bg-secondary">{{$accessUser}}</span>
                             </button> 

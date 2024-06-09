@@ -44,10 +44,12 @@ class ListsController extends Controller
     function showList(Request $request){
         
         $userId = $request->user()->id;
-        //$ownerId = $lists = UserList::query()->select("*")
 
         $listID = $request->id;
         $list = UserList::find($listID);
+
+        if (!isset($list)) return redirect('/');
+
         if (($list->owner == $userId) || (str_contains($list->hasAccess, $userId))){
             $tasks = $this->getTasks($listID);
             return view("profile.listCard", ["list"=>$list, "tasks"=>$tasks]);
@@ -86,10 +88,7 @@ class ListsController extends Controller
         $hasAccess = explode(",",$list->hasAccess);
         $removeSharedID = $request->removeSharedID;
 
-        
-
         unset($hasAccess[array_search($removeSharedID,$hasAccess)]);
-
 
         $hasAccess = implode(",",$hasAccess);
         
