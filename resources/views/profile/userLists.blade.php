@@ -18,27 +18,5 @@
 
         </div>
     </div>
-    
-<script>
-    $(document).ready(function() {
-        $('#listForm').on('submit', function(e) {
-            e.preventDefault(); 
-            let ListName = $('#ListName').val();
-            let ListData = $('#ListData').val();
-            $.ajax({
-                url: "{{route('list.create')}}", 
-                type: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    name:ListName,
-                    data:ListData,
-                },
-                success: function (response) {
-                    $('body').html(response);
-                }
-            });
-        });
-    });
-</script>
 
 </x-app-layout>

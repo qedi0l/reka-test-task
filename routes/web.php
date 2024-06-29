@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/mylists', [ListsController::class, 'all'])->name('mylists');
+    Route::get('/mylists', [ListsController::class, 'show'])->name('mylists');
     Route::get('/list/show/{id}', [ListsController::class, 'showList'])->name('list.show');
     Route::post('/list/create', [ListsController::class, 'create'])->name('list.create');
     Route::post('/list/delete', [ListsController::class, 'delete'])->name('list.delete');

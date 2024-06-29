@@ -45,15 +45,16 @@ ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/relea
 # Nodejs install
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
+RUN npm install
+RUN npm run build
+
 
 # install composer
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-
 # copy composer.json to workdir & install dependencies
 COPY composer.json ./
 RUN composer install
 
-RUN npm run build
 # RUN php artisan storage:link
 
 # Set the default command to run php-fpm

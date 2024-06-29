@@ -10,9 +10,8 @@ use App\Models\Task;
 
 class ListsController extends Controller
 {
-    //
-
-    function all(Request $request): View{
+    function show(Request $request): View
+    {
 
         $userId = $request->user()->id;
         $lists = UserList::query()->select("*")->where("owner",$userId)->get();
@@ -27,39 +26,41 @@ class ListsController extends Controller
         return view("profile.userLists", ["lists" => $lists, "sharedAcess"=>$sharedAcess]);
     }
 
-    function create(Request $request): RedirectResponse{
+    function create(Request $request): RedirectResponse
+    {
 
-        
         $list = new UserList();
         $list->name = $request->input('name');
         $list->data = $request->input('data');
         $list->owner = $request->user()->id;
-
         $list->save(); 
 
-
-        return redirect()->route('mylists');
+        return back()->with('status', 'success');
     }
     
-    function showList(Request $request){
-        
+    function showList(Request $request): View
+    {
         $userId = $request->user()->id;
-
         $listID = $request->id;
+
         $list = UserList::find($listID);
 
-        if (!isset($list)) return redirect('/');
-
-        if (($list->owner == $userId) || (str_contains($list->hasAccess, $userId))){
-            $tasks = $this->getTasks($listID);
-            return view("profile.listCard", ["list"=>$list, "tasks"=>$tasks]);
+        // Has access
+        if (($list->owner == $userId) || (str_contains($list->hasAccess, $userId)))
+        {
+            // Not empty
+            if($tasks = $this->getTasks($listID)) 
+                return view("profile.listCard", ["list"=>$list, "tasks"=>$tasks]);
+            else 
+                return view("profile.listCard", ["list"=>$list])->with("status", "list-emty");
         }
         else
-            return redirect('/');
+            return redirect()->back();
         
     }
 
-    function share(Request $request): RedirectResponse{
+    function share(Request $request): RedirectResponse
+    {
         
         $listID = $request->listID;
         $list = UserList::find($listID);
@@ -74,14 +75,13 @@ class ListsController extends Controller
         $hasAccess = array_unique($hasAccess);
         
         $list->hasAccess = implode(",",$hasAccess);
-
         $list->save();
 
 
-        return redirect()->route('list.show',["id"=>$listID]);
+        return back()->with("status","success");
     }
-    function removeShared(Request $request): RedirectResponse{
-
+    function removeShared(Request $request): RedirectResponse
+    {
         $listID = $request->listID;
         $list = UserList::find($listID);
         
@@ -93,14 +93,14 @@ class ListsController extends Controller
         $hasAccess = implode(",",$hasAccess);
         
         $list->hasAccess = $hasAccess;
-
         $list->save();
         
-        return redirect()->route('list.show',["id"=>$listID]);
+        return back()->with("status","success");
     }
 
 
-    function delete(Request $request){
+    function delete(Request $request)
+    {
         $listID = $request->input("listID");
         $list = UserList::find($listID);
         $tasks = $this->getTasks($listID);
@@ -113,17 +113,16 @@ class ListsController extends Controller
 
         $list->delete();
 
-        return redirect()->route('mylists');
+        return back()->with("status","success");
     }
 
 
-    private function getTasks($listID){
-
+    private function getTasks($listID)
+    {
         $list  = UserList::find($listID);
         $tasks = $list->tasks;
         return $tasks;
+
     }
-
-
     
 }

@@ -11,9 +11,9 @@ services:
       - POSTGRES_PASSWORD=75?4jHur^gn8u4kt^
       - POSTGRES_USER=postgres
       - POSTGRES_DB=pg16
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - PGDATA=/var/lib/postgressql/data/pgdata
     volumes:
-      - /postgresql/data":/var/lib/postgresql/data
+      - /postgressql/data":/var/lib/postgressql/data
     command:
       - "postgres"
       - "-c"
